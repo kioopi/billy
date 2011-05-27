@@ -1,0 +1,18 @@
+#canvas { 
+  border: 1px solid black; 
+} 
+
+#cbfs img { 
+  width:75px;
+  cursor:pointer; 
+} 
+
+#cbfs img:hover { 
+  background:#bada55;
+  border-radius:10px;
+} 
+
+.helptext li { 
+ list-style-type:disc;
+} 
+

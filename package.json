@@ -1,0 +1,11 @@
+{
+  "name": "billyfication",
+  "description": "A billyfire of pictures.",
+  "version": "1.0.0",
+  "author": "Vangelis Tsoumenis <kioopi@gmail.com>",
+  "main": "./index.js",
+  "dependencies": {
+    "paperboy": ">=0.0.2" 
+  },
+  "engines": { "node": ">= 0.1.98" }
+}
