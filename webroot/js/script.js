@@ -1,18 +1,51 @@
-dojo.require("dijit.form.TextBox"); 
-dojo.require("dijit.form.Button"); 
-    
-
 var IMAGEPROXY_PREFIX = '/img/'; 
 
+
+if ( !Function.prototype.bind ) {
+  Function.prototype.bind = function( obj ) {
+    var slice = [].slice,
+        args = slice.call(arguments, 1), 
+        self = this, 
+        nop = function () {}, 
+        bound = function () {
+          return self.apply( this instanceof nop ? this : ( obj || {} ), 
+                              args.concat( slice.call(arguments) ) );    
+        };
+    nop.prototype = self.prototype;
+    bound.prototype = new nop();
+    return bound;
+  };
+}
+
+var byId = document.getElementById.bind(document); 
+
 dojo.addOnLoad(function(){ 
-  //var app = new App(); 
-  var controls = dojo.byId("bgimg");
-   canvas = new fabric.Element('canvas');
+  /*
+  var sizeCanvas = function(){ 
+    var cc = byId('canvascontainer'),
+        can = byId('cnvs'); 
+    var value = document.defaultView.getComputedStyle(cc, "").getPropertyValue('width');
+
+    can.style.width = ( parseInt(value,10) - 50) + 'px';
+    can.setAttribute('width', ( parseInt(value,10) - 50) );
+  }; 
+//  sizeCanvas();
+   
+  window.addEventListener("resize", function(e){
+    sizeCanvas();
+  }, false);
+  //*/ 
+
+  byId('helpBtn').addEventListener('click', function(){ 
+    dojo.toggleClass('helpbox', 'active'); 
+  }, false); 
+
+  var canvas = new fabric.Element('cnvs');
   var originalImage = null;
    billyfaces = []; 
 
   var loadOriginal = function(url){ 
-      url = url || IMAGEPROXY_PREFIX + originalUrlInput.attr('value'); 
+      url = url || IMAGEPROXY_PREFIX + byId('originalUrlField').value; 
       if(originalImage) 
         canvas.remove(originalImage); 
 
@@ -25,20 +58,17 @@ dojo.addOnLoad(function(){
       }); 
   };
 
-  var originalUrlInput = new dijit.form.TextBox({
-    onKeyDown: function(e){
+ byId('originalUrlField').addEventListener('keyDown', function(e){ 
       if(e.keyCode == 13) loadOriginal();
-    } 
-  }).placeAt(controls);
+  }, false); 
 
-  new dijit.form.Button({
-    label: 'Load Image', 
-    onClick: function(){ 
+
+  byId('loadOriginalBtn').addEventListener('click', function(){ 
         loadOriginal();
-    } 
-  }).placeAt(controls); 
+  }, false); 
 
 
+  // pressing 'escape' should remove the active billyface
   dojo.connect(dojo.body(), 'onkeydown', null, function(e){ 
     if(e.keyCode == 46) {
       var selected = canvas.getActiveObject(); 
@@ -60,19 +90,16 @@ dojo.addOnLoad(function(){
           canvas.add(image); 
 	  canvas.bringToFront(image);
           billyfaces.push(image); 
-	  dojo.byId('canvas').scrollIntoViewIfNeeded(); 
+	  //dojo.byId('canvas').scrollIntoViewIfNeeded(); 
         }); 
       } 
     }; 
   })()); 
 
-  var save = new dijit.form.Button({
-    label: 'Save', 
-    onClick: function(){ 
-      canvas.deactivateAll();
-      window.open(canvas.toDataURL('png')); 
-    } 
-  }).placeAt(dojo.byId('save'));
+  byId('saveBtn').addEventListener('click', function(){ 
+    canvas.deactivateAll();
+    window.open(canvas.toDataURL('png')); 
+  }, false); 
 
 
   // drag and drop original image loading ------  
@@ -81,7 +108,7 @@ dojo.addOnLoad(function(){
     e.preventDefault();
   }; 
 
-  var dropzone = document.getElementById("gfxNode"); 
+  var dropzone = document.getElementById("canvascontainer"); 
   dropzone.addEventListener("dragenter", noop, false);
   dropzone.addEventListener("dragexit", noop, false);
   dropzone.addEventListener("dragover", noop, false);
@@ -124,7 +151,6 @@ dojo.addOnLoad(function(){
       }; 
       // TODO prevent the processing of anything but real image files. 
       reader.readAsDataURL(files[0]); // we only care about one dropped image. 
-
     }
   }, false); 
 

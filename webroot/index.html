@@ -11,58 +11,117 @@
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-  <link rel="stylesheet" href="css/oocss.css">
+
+  <link rel="stylesheet" href="css/__oocss.css">
   <link rel="stylesheet" href="css/style.css">
+  <link href='http://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css'>
   <style type="text/css">
+	  /*
     @import "http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/resources/dojo.css"; 
     @import "http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/tundra/tundra.css"; 
+    */
   </style>  
 </head> 
 <body class="tundra"> 
-  <div class="page liquid"> 
-    <div class="head"> 
-      <h1>Classic Billyfication</h1>
+  <div class="page"> 
+    <div class="header"> 
+      <h1>Basic Billyfication</h1>
     </div> 
-    <div class="body"> 
-      <div class="rightCol">
-        <p class="helptext"> 
-	  <ul> 
-	    <li>Find a picture you want to billyfy.</li> 
-	    <li>Right-Click on the picture and choose "Copy image URL"</li>
-	    <li>Go back to cbf and paste the URL in the text-field.</li> 
-	    <li>Click "Load Image" (and wait for a couple of seconds)</li> 
-	    <li>Move or resize the image with the mouse until it fits on the working-space.</li> 
-	    <li>Add a Billyface (or several) by clicking it on the left sidebar.</li> 
-	    <li>Move, rotate or resize it using the mouse.</li>  
-	    <li>Click the "Save" Button.</li> 
-	    <li>A new Tab is opened, showing the new image.</li> 
-	    <li>Click it with the right mouse-button and choose "Save image as..."</li>
-	    <li>Go to <a href="https://www.facebook.com/home.php?sk=group_371408514557">The Appreciation Society</a> and post your contribution.</li>
-
-
-	  </ul> 
-	</p> 
-      </div>
-      <div class="leftCol">&nbsp;
-	 <div id="bgimg">
-	 </div> 
+    <div class="main"> 
+      <div id="billyfaces"> 
 	 <ul id="cbfs"> 
  	   <li><img src="gfx/classicbillyface.png" /></li>
     	   <li><img src="gfx/shorthair.png" /> </li>
 	   <li><img src="gfx/hat.png" /> </li>
 	   <li><img src="gfx/noneck.png" /></li>
 	 </ul> 
-	 <div id="save"> 
-	 </div> 
+	 <input type="button" value="Save" id="saveBtn" /> 
       </div> 
-      <div class="main">
-        <div id="gfxNode">
-          <canvas id="canvas" width="700" height="500"></canvas> 
-        </div>
+      <div class="centerpane"> 
+        <div class="loadUrlDiv">  
+	  <h3>Paste URL here:</h3>
+	  <input type="text" id="originalUrlField" /> <input type="button" value="Load" id="loadOriginalBtn" />  
+	</div>
+        <div>  
+	  <div class="canvascontainer" id="canvascontainer"> 
+	    <div class="infooverlay"> 
+	      <div>Loading</div> 
+	    </div> 
+	    <canvas id="cnvs" width="600" height="500"></canvas> 
+	  </div>
+	</div>
+      </div> 
+      <div class="helpcontainer"> 
+	 
+	<div class="helpbox" id="helpbox"> 
+        <div class="helplabel" id="helpBtn">Help</div>  
+	<div class="help"> 
+	  <h3>Loading an original Image:</h3> 
+	  <ul> 
+	    <li>Find a picture in the internet you want to billyfy.</li> 
+	    <li>Right-Click on the picture and choose "Copy image URL" or "Copy Adress"</li>
+	    <li>Come back here and paste the URL in the text-field.</li> 
+	    <li>Click "Load" (and wait for a couple of seconds)</li> 
+          </ul> 
+	  <h4>Or:</h4> 
+	  <ul> 
+	    <li>Drag an image from your computer and drop it in the workspace.</li> 
+	  </ul> 
+	  <h3>Editing:</h3> 
+	    <ul>
+	      <li>Move or resize the image with the mouse until it fits on the working-space.</li> 
+	      <li>Add a Billyface (or several) by clicking it on the left sidebar.</li> 
+	      <li>Move, rotate or resize it using the mouse.</li>  
+            </ul> 
+	  <h3>Saving:</h3> 
+	    <ul> 
+              <li>Click the "Save" Button.</li> 
+	      <li>A new Tab is opened, showing the new image.</li> 
+	      <li>Click it with the right mouse-button and choose "Save image as..."</li>
+	      <li>Go to <a href="https://www.facebook.com/home.php?sk=group_371408514557">The Appreciation Society</a> and post your contribution.</li>
+	    </ul> 
+	</div> 
+      </div> 
       </div>
 
-    </div>
-  </div>
+    </div> 	 
+    <div class="footer"> 
+      <div>
+      <p>This tool is a contribution to the <a href="https://www.facebook.com/home.php?sk=group_371408514557">The Billiam Van Kiddur Appreciation Society</a>, a meeting point for those whose lives would be empty without Billiam Van Kiddur, in order to share information, photographs and other tidbits to give our lives meaning.</p>
+      <p>The idea is to aide the process of democratizing the creation of billyfied images by making tools accessible outside of the boundaries of the club that is photoshop owners.</p>
+      </div>
+
+      <div> 
+	      <p>If you have questions, suggestions or found bugs and error, please don't hesitate to contact me at <span>kioopi@gmail.com</span> / <a href="http://twitter.com/kioopi">@kioopi</a>. The source-code of this application is available at <a href="https://github.com/kioopi/billy">github.com</a>.
+	      
+	      </p> 
+      </div> 
+
+      <div> 
+      <p>If you would like to take your creation further, after you have saved it, there are numerous free online tools at your disposal. For example: </p> 
+      <p> 
+      <ul>
+       <li><a href="http://diy.despair.com/">Motivator Maker</a></li> 
+       <li><a href="http://wigflip.com/saywhat/">Add speech bubbles</a></li> 
+       <li><a href="http://wigflip.com/roflbot/">Add captions</a></li> 
+       <li><a href="http://www.picresize.com">picresize.com</a></li> 
+       <li><a href="http://www.online-image-editor.com">online-image-editor.com</a></li> 
+       <li><a href="http://www.resizr.com">resizr.com</a></li> 
+       <li><a href="http://www.picnik.com/">Picnik does everything</a></li> 
+       <li><a href="http://wigflip.com/automotivator/">AutoMotivator</a></li> 
+
+      </ul> 
+      </p>
+
+      </div>
+
+
+    </div> 
+ </div> 
+  
+
+
+
   <!--[if IE]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
