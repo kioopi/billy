@@ -20,27 +20,37 @@ if ( !Function.prototype.bind ) {
 var byId = document.getElementById.bind(document); 
 
 dojo.addOnLoad(function(){ 
-  /*
   var sizeCanvas = function(){ 
     var cc = byId('canvascontainer'),
-        can = byId('cnvs'); 
+        can = byId('canvas'); 
     var value = document.defaultView.getComputedStyle(cc, "").getPropertyValue('width');
 
     can.style.width = ( parseInt(value,10) - 50) + 'px';
     can.setAttribute('width', ( parseInt(value,10) - 50) );
   }; 
-//  sizeCanvas();
+  sizeCanvas();
    
   window.addEventListener("resize", function(e){
     sizeCanvas();
   }, false);
   //*/ 
 
-  byId('helpBtn').addEventListener('click', function(){ 
-    dojo.toggleClass('helpbox', 'active'); 
+  byId('helpBtn').addEventListener('click', function(e){ 
+    console.log('hello');
+    e.stopPropagation();
+    if(byId('helpbox').classList.toggle('active')){ 
+            
+      var closeHelpBox = function(e){ 
+        byId('helpbox').classList.remove('active'); 
+
+	document.removeEventListener('click', closeHelpBox, false); 
+      } 
+      document.addEventListener('click', closeHelpBox, false); 
+    } 
+
   }, false); 
 
-  var canvas = new fabric.Element('cnvs');
+  var canvas = new fabric.Element('canvas');
   var originalImage = null;
    billyfaces = []; 
 
