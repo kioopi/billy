@@ -4,7 +4,6 @@ html{color:#000;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fiel
 body{font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}select,input,button,textarea{font:99% arial,helvetica,clean,sans-serif;}table{font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
 
 
-
 body { 
   background: url("/gfx/whitenoise.png"); 
   font-family: Arial, Helvetica, sans-serif;
@@ -28,6 +27,7 @@ h1 {
  -webkit-box-orient: horizontal;
  display: -moz-box;
  -moz-box-orient: horizontal;
+ width:100%;
 }
 
 .main>div {
@@ -40,7 +40,7 @@ h1 {
 
   box-flex:0;
   -webkit-box-flex:0;
-  -mox-box-flex:0;
+  -moz-box-flex:0;
 } 
 
 #cbfs {
@@ -60,7 +60,7 @@ h1 {
   position:relative;
   box-flex:1;
   -webkit-box-flex:1;
-  -mox-box-flex:1;
+  -moz-box-flex:1;
 } 
 
 .loadUrlDiv { 
@@ -101,6 +101,8 @@ h1 {
   border-radius: 4px;
   padding:2px;
 
+  min-width:85%;
+
 } 
 
 #loadOriginalBtn {
@@ -117,7 +119,7 @@ h1 {
 
   box-flex:0;
   -webkit-box-flex:0;
-  -mox-box-flex:0;
+  -moz-box-flex:0;
 } 
 
 .helplabel { 
@@ -173,19 +175,24 @@ h1 {
 } 
 
 
-
 .footer { 
   margin: 2em -30px 0 -30px;
   padding: 20px;
   background: url("/gfx/blacknoise.png"); 
   color: white; 
+} 
 
+.footersock { 
   display: box;
   box-orient: horizontal;
   display: -webkit-box;
   -webkit-box-orient: horizontal;
+
   display: -moz-box;
   -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+
+  width:100%;
 
 } 
 
@@ -193,10 +200,11 @@ h1 {
   color: #bada55;
 } 
 
-.footer>div { 
-  box-flex:1;
+.footersock>div { 
+   box-flex:1; 
   -webkit-box-flex:1;
-  -mox-box-flex:1;
+  -moz-box-flex:1;
+
   width:1px;
   margin:1em;
 } 
