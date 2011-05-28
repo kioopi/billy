@@ -11,11 +11,11 @@ dojo.addOnLoad(function(){
   var originalImage = null;
    billyfaces = []; 
 
-  var loadOriginal = function(){ 
+  var loadOriginal = function(url){ 
+      url = url || IMAGEPROXY_PREFIX + originalUrlInput.attr('value'); 
       if(originalImage) 
         canvas.remove(originalImage); 
-       
-      var url = IMAGEPROXY_PREFIX + originalUrlInput.attr('value'); 
+
       fabric.Image.fromURL(url, function(image) {
         originalImage = image; 
 	canvas.centerObjectH(image);
@@ -74,6 +74,59 @@ dojo.addOnLoad(function(){
     } 
   }).placeAt(dojo.byId('save'));
 
-}); 
 
+  // drag and drop original image loading ------  
+  var noop = function(e){
+    e.stopPropagation();
+    e.preventDefault();
+  }; 
+
+  var dropzone = document.getElementById("gfxNode"); 
+  dropzone.addEventListener("dragenter", noop, false);
+  dropzone.addEventListener("dragexit", noop, false);
+  dropzone.addEventListener("dragover", noop, false);
+  dropzone.addEventListener("drop", function(e){ 
+    noop(e); 
+
+    if(e.dataTransfer){ 
+      var files = e.dataTransfer.files; 
+      if(typeof files == "undefined" || files.length == 0){ 
+        console.log('No files dropped!?');  
+	return 0; 
+      } 
+      var reader = new FileReader(); 
+      // Handle errors that might occur while reading the file (before upload).
+      reader.onerror = function(evt) {
+        var message;
+        // REF: http://www.w3.org/TR/FileAPI/#ErrorDescriptions
+        switch(evt.target.error.code) {
+          case 1:
+            message = file.name + " not found.";
+            break;
+          case 2:
+            message = file.name + " has changed on disk, please re-try.";
+            break;
+          case 3:
+            messsage = "Upload cancelled.";
+            break;
+          case 4:
+            message = "Cannot read " + file.name + ".";
+            break;
+          case 5:
+            message = "File too large for browser to upload.";
+            break;
+        }
+        console.error(message);
+      }      
+      reader.onloadend = function(evt){
+        var data = evt.target.result;
+	loadOriginal(data);
+      }; 
+      // TODO prevent the processing of anything but real image files. 
+      reader.readAsDataURL(files[0]); // we only care about one dropped image. 
+
+    }
+  }, false); 
+
+}); 
 
