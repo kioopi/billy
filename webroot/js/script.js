@@ -1,6 +1,6 @@
 var IMAGEPROXY_PREFIX = '/img/'; 
 
-
+// add a polyfill for bind 
 if ( !Function.prototype.bind ) {
   Function.prototype.bind = function( obj ) {
     var slice = [].slice,
@@ -19,7 +19,7 @@ if ( !Function.prototype.bind ) {
 
 var byId = document.getElementById.bind(document); 
 
-dojo.addOnLoad(function(){ 
+window.addEventListener("load", function(e){
   var sizeCanvas = function(){ 
     var cc = byId('canvascontainer'),
         can = byId('canvas'); 
@@ -33,7 +33,6 @@ dojo.addOnLoad(function(){
   window.addEventListener("resize", function(e){
     sizeCanvas();
   }, false);
-  //*/ 
 
   byId('helpBtn').addEventListener('click', function(e){ 
     console.log('hello');
@@ -79,15 +78,15 @@ dojo.addOnLoad(function(){
 
 
   // pressing 'escape' should remove the active billyface
-  dojo.connect(dojo.body(), 'onkeydown', null, function(e){ 
+  document.addEventListener('keydown', function(e){ 
     if(e.keyCode == 46) {
       var selected = canvas.getActiveObject(); 
       billyfaces.slice(billyfaces.indexOf(selected),1); 
       canvas.fxRemove(selected);   
     } 
-  }); 
+  }, false); 
 
-  dojo.connect(dojo.byId('cbfs'), 'click', null,(function(){
+  byId('cbfs').addEventListener('click', (function(){ 
     var deg = 0; 
     return function(e){ 
       if(e.target.tagName == 'IMG'){  
@@ -100,11 +99,12 @@ dojo.addOnLoad(function(){
           canvas.add(image); 
 	  canvas.bringToFront(image);
           billyfaces.push(image); 
-	  //dojo.byId('canvas').scrollIntoViewIfNeeded(); 
+	  var can = byId('canvas'); 
+	  (can.scrollIntoViewIfNeeded && can.scrollIntoViewIfNeeded()) || can.scrollIntoView(); 
         }); 
       } 
     }; 
-  })()); 
+  })(), false); 
 
   byId('saveBtn').addEventListener('click', function(){ 
     canvas.deactivateAll();
@@ -164,5 +164,5 @@ dojo.addOnLoad(function(){
     }
   }, false); 
 
-}); 
+}, false); 
 
