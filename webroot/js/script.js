@@ -88,6 +88,22 @@ function findEdges(imageData) {
   } 
 } 
 
+function clippedDataUrl (context, x,y,w,h) { 
+  // create new canvas 
+  var tmpCan = document.createElement('canvas'); 
+  tmpCan.setAttribute('width', w);
+  tmpCan.setAttribute('height', h);
+  // copy cropped data to new canvas
+  var croppedData = context.getImageData(x, y, w, h); 
+  var ctx = tmpCan.getContext('2d');
+  ctx.putImageData(croppedData, 0,0); 
+  // get imgdata from new canvas
+  imgdata = tmpCan.toDataURL('png'); 
+  return imgdata; 
+} 
+
+
+
 // add a polyfill for bind from mdc
 // is this necc? used only once. 
 if ( !Function.prototype.bind ) {
@@ -203,19 +219,9 @@ window.addEventListener("load", function(e){
           rect = findEdges(id); // find boundaries
 	 // ct.putImageData(id,0,0); 
 
-      if(rect){ 
-        // create new canvas 
-        var tmpCan = document.createElement('canvas'); 
-	tmpCan.setAttribute('width', rect.w);
-	tmpCan.setAttribute('height', rect.h);
-	var ctx = tmpCan.getContext('2d');
-        // copy cropped data to new canvas
-        var croppedData = ct.getImageData(rect.x, rect.y, rect.w, rect.h); 
-	ctx.putImageData(croppedData, 0,0); 
-        // get imgdata from new canvas
-	imgdata = tmpCan.toDataURL('png'); 
-        window.open(imgdata); 
-      }
+      if(rect) 
+        imgdata = clippedDataUrl(ct, rect.x, rect.y, rect.w, rect.h); 
+      
       window.open(imgdata); 
 
     }  
