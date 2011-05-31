@@ -74,9 +74,7 @@ function findEdges(imageData) {
     if (bottomright.y) break; 
   } 
   
-  console.log(topleft, bottomright);
   if (!(topleft.x && topleft.y && bottomright.x && bottomright.y)) { 
-    console.error('No boundaries found!');
     return null;
   } else { 
     return { 
@@ -207,6 +205,15 @@ window.addEventListener("load", function(e){
       } 
     }; 
   })(), false); 
+
+  byId('grayscaleBtn').addEventListener('click', function(){ 
+    var obj =  canvas.getActiveObject(); 
+    if(obj && obj.toGrayscale){ 
+      obj.toGrayscale(function(){ 
+        obj.render(canvas.getElement().getContext('2d')); 
+      }); 
+    } 
+  }, false);
 
   byId('saveBtn').addEventListener('click', function(){ 
     canvas.deactivateAll();
