@@ -1,6 +1,7 @@
 # Basic Billyfication 
 
-  A web-tool to add predefined overlays to images. 
+  A browser-based single-purpose image editor. It allows to add predefined overlays to images loaded from the web or via file-api.  
+
 
   See it deployed at [billy.nodester.com](http://billy.nodester.com). 
 
