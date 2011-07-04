@@ -10,8 +10,7 @@ var PORT = 1337,
     URLPREF_IMAGEPROXY = '/img/', 
     URLPREF_WEBROOT = '/'; 
 
-
-
+//
 
 http.createServer(function (req, res) {
   if (req.url.substr(0,URLPREF_IMAGEPROXY.length) === URLPREF_IMAGEPROXY) {
