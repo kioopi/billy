@@ -1,3 +1,4 @@
+/*global fabric*/
 var IMAGEPROXY_PREFIX = '/img/'; 
 
 /*
@@ -82,7 +83,7 @@ function findEdges(imageData) {
       y: topleft.y, 
       w: bottomright.x - topleft.x,
       h: bottomright.y - topleft.y
-    } 
+    };
   } 
 } 
 
@@ -96,7 +97,7 @@ function clippedDataUrl (context, x,y,w,h) {
   var ctx = tmpCan.getContext('2d');
   ctx.putImageData(croppedData, 0,0); 
   // get imgdata from new canvas
-  imgdata = tmpCan.toDataURL('png'); 
+  var imgdata = tmpCan.toDataURL('png'); 
   return imgdata; 
 } 
 
@@ -149,34 +150,34 @@ window.addEventListener("load", function(e){
 
   }, false); 
 
-  canvas = new fabric.Element('canvas');
+  var canvas = new fabric.Element('canvas');
   var originalImage = null;
-   billyfaces = []; 
+  var billyfaces = []; 
 
   var loadOriginal = function(url){ 
-      url = url || IMAGEPROXY_PREFIX + byId('originalUrlField').value; 
-      if(originalImage) 
-        canvas.remove(originalImage); 
+    url = url || IMAGEPROXY_PREFIX + byId('originalUrlField').value; 
+    if(originalImage) { 
+      canvas.remove(originalImage);
+    }
 
-      fabric.Image.fromURL(url, function(image) {
-        originalImage = image; 
-	canvas.centerObjectH(image);
-	canvas.centerObjectV(image);
-        canvas.add(image); 
-	canvas.sendToBack(image); 
-      }); 
+    fabric.Image.fromURL(url, function(image) {
+      originalImage = image; 
+	  canvas.centerObjectH(image);
+	  canvas.centerObjectV(image);
+      canvas.add(image); 
+	  canvas.sendToBack(image); 
+    }); 
   };
 
- byId('originalUrlField').addEventListener('keyDown', function(e){ 
-      if(e.keyCode == 13) loadOriginal();
-  }, false); 
+  byId('originalUrlField').addEventListener('keyDown', function(e){ 
+    if(e.keyCode == 13) loadOriginal();
+  }); 
 
 
   byId('loadOriginalBtn').addEventListener('click', function(){ 
     loadOriginal();
-  }, false); 
-
-
+  }); 
+  
   // pressing 'escape' should remove the active billyface
   document.addEventListener('keydown', function(e){ 
     if(e.keyCode == 46) {
@@ -184,7 +185,7 @@ window.addEventListener("load", function(e){
       billyfaces.slice(billyfaces.indexOf(selected),1); 
       canvas.fxRemove(selected);   
     } 
-  }, false); 
+  }); 
 
   byId('cbfs').addEventListener('click', (function(){ 
     var deg = 0; 
